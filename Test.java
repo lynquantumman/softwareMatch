@@ -1,8 +1,8 @@
 
 public class Test {
 	public static void main(String[] args){
-		int n = 12;
-		int m = 6;
+		int n = 5;
+		int m = 3;
 		StatusSpace statusSpace = new StatusSpace(n, m);
 		int total = statusSpace.size();
 //		statusSpace.statusGenerate(n, m);

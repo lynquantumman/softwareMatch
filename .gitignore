@@ -1,2 +1,6 @@
 /StatusSpace.class
 /Test.class
+/MaxTemperature.class
+/MaxTemperatureMapper.class
+/MaxTemperatureReducer.class
+/SoftwareMatchMapper.class

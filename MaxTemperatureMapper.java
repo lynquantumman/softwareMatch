@@ -11,7 +11,7 @@ public class MaxTemperatureMapper
 	public void map(LongWritable key, Text value, Context context)
 	throws IOException, InterruptedException	
 	{	
-		public static final int MISSING = 9999;
+		final int MISSING = 9999;
 		String line = value.toString();
 		String year = line.substring(15,19);
 		int airTemperature = 0;
