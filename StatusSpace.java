@@ -11,17 +11,23 @@ class StatusSpace{
 	int n = 0;
 	int m = 0;
 	int[][] dpstir2;
-	// ini
+	ArrayList<ArrayList<ArrayList<Integer>>> statusspace = null;
+	// initial
 	public  StatusSpace(int n, int m){
 		this.n = n;
 		this.m = m;
 		dpstir2 = new int[n+1][m+1];
 	}
-
-
+	public boolean isEmpty(){
+		return this.statusspace==null;
+	}
+	public void statusGenerate(){
+		this.statusspace = statusGenerateRecursive(n,m);
+	}
+	
 	public int size(){
 		// dpstir2[i][j] is to save the value of 
-		// 2 second number of stirling at[i+1][j+1]
+		// 2 second number of stirling at(i,j)
 		if(this.n<=0||this.m<=0){
 			System.out.println("This class has not been initialled rightly");
 			return -1;
@@ -31,19 +37,24 @@ class StatusSpace{
 		for(int i = 0;i<n+1;i++){
 			Arrays.fill(dpstir2[i],0);
 		}
-		//===
-		int ans = 0;
-		for(int j = 1;j<=m;j++){
-			if(0==dpstir2[n][j]){
-				dpstir2[n][j] = nstir2k(n,j);
-			}	
-			ans+=dpstir2[n][j];
-		}
-		return ans;
+		//===this part means the box can be empty
+//		int ans = 0;
+//		for(int j = 1;j<=m;j++){
+//			if(0==dpstir2[n][j]){
+//				dpstir2[n][j] = nstir2k(n,j);
+//			}	
+//			ans+=dpstir2[n][j];
+//			
+//		}
+//		return ans;
+		//=======================================
 		
+		//===this part means the box can not be empty
+		return nstir2k(n, m);
+				
 	}
 	//2 second number of stirling at[n][k]
-	private int nstir2k(int n, int k){
+	public int nstir2k(int n, int k){
 
 		if(n==k||k==1)
 			return 1;
@@ -64,8 +75,8 @@ class StatusSpace{
 		}
 	}
 
-	public ArrayList<ArrayList<ArrayList<Integer>>> statusGenerate(int n,int k){
-		ArrayList<ArrayList<ArrayList<Integer>>> statusSpace
+	private ArrayList<ArrayList<ArrayList<Integer>>> statusGenerateRecursive(int n,int k){
+		ArrayList<ArrayList<ArrayList<Integer>>> statusSpaceLocal
 			= new ArrayList<ArrayList<ArrayList<Integer>>>();
 		
 		if(n==k){
@@ -75,8 +86,8 @@ class StatusSpace{
 				box.add(i);
 				status.add(box);
 			}
-			statusSpace.add(status);
-			return statusSpace;
+			statusSpaceLocal.add(status);
+			return statusSpaceLocal;
 		}
 		else if(1==k){
 			ArrayList<ArrayList<Integer>> status = new ArrayList<ArrayList<Integer>>();
@@ -85,16 +96,16 @@ class StatusSpace{
 				box.add(i);
 			}
 			status.add(box);
-			statusSpace.add(status);
-			return statusSpace;
+			statusSpaceLocal.add(status);
+			return statusSpaceLocal;
 		}
 		else if (n<k) {
-			return statusSpace;
+			return statusSpaceLocal;
 		}
 		else{
 			//===This part is to perform s(n-1,k-1)
-			statusSpace.addAll(statusGenerate(n-1,k-1));
-			for(ArrayList<ArrayList<Integer>> status:statusSpace){
+			statusSpaceLocal .addAll(statusGenerateRecursive(n-1,k-1));
+			for(ArrayList<ArrayList<Integer>> status:statusSpaceLocal){
 				ArrayList<Integer> n_th = new ArrayList<Integer>();
 				n_th.add(n);
 				status.add(n_th);
@@ -102,9 +113,10 @@ class StatusSpace{
 			//===
 			//this part is to perform k*s(n-1,k)===	
 			//===this is to generate a super space containing k status spaces				
-			ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> superStatusSpace = new ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>>();
+			ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> superStatusSpace 
+				= new ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>>();
 			for(int i = 0;i<k;i++){
-				superStatusSpace.add(statusGenerate(n-1,k));
+				superStatusSpace.add(statusGenerateRecursive(n-1,k));
 			}
 			//===
 			//===this is to add n into every status of different status space
@@ -124,11 +136,14 @@ class StatusSpace{
 				statusSpcPart2.addAll(statusSpc);
 				
 			}
-			statusSpace.addAll(statusSpcPart2);
-			return statusSpace;
+			statusSpaceLocal.addAll(statusSpcPart2);
+			return statusSpaceLocal;
 			
 			
 		}
+		
+//		对象的持久化存储
+		
 		
 	}
 
