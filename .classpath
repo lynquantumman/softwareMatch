@@ -98,5 +98,6 @@
 	<classpathentry kind="lib" path="E:/mathsoft/eclipse/hadoop_relative/hadoop-2.5.2/share/hadoop/common/lib/xmlenc-0.52.jar"/>
 	<classpathentry kind="lib" path="E:/mathsoft/eclipse/hadoop_relative/hadoop-2.5.2/share/hadoop/common/lib/xz-1.0.jar"/>
 	<classpathentry kind="lib" path="E:/mathsoft/eclipse/hadoop_relative/hadoop-2.5.2/share/hadoop/common/lib/zookeeper-3.4.6.jar"/>
+	<classpathentry kind="var" path="JUNIT"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

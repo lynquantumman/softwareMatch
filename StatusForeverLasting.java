@@ -15,7 +15,7 @@ public class StatusForeverLasting {
 			
 		try {
 			obOut = new ObjectOutputStream(
-					new FileOutputStream("C:/Users/Administrator/Documents/softwareMatch/statusSpaceObject.txt"));
+					new FileOutputStream("C:/Users/Administrator/Documents/softwareMatch/statusSpaceObject"));
 			obOut.writeObject(statusSpace);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,7 +13,11 @@ import java.util.Arrays;
 *n software in m sets, where the set can be empty;
 *@version 1.0
 */
-class StatusSpace{
+class StatusSpace implements Serializable{
+	/**
+	 * Serializable date 21:48 2016/12/6
+	 */
+	private static final long serialVersionUID = 3936478554325703379L;
 	int n = 0;
 	int m = 0;
 	int[][] dpstir2;
@@ -18,9 +28,11 @@ class StatusSpace{
 		this.m = m;
 		dpstir2 = new int[n+1][m+1];
 	}
+	
 	public boolean isEmpty(){
 		return this.statusspace==null;
 	}
+	
 	public void statusGenerate(){
 		this.statusspace = statusGenerateRecursive(n,m);
 	}
@@ -147,4 +159,69 @@ class StatusSpace{
 		
 	}
 
+	public static boolean writeObjectOfThis(StatusSpace objectOfThisClass, String addr){
+
+		ObjectOutputStream out = null;
+		try {
+			 out = new ObjectOutputStream(
+					new FileOutputStream(addr));
+			out.writeObject(objectOfThisClass);
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		finally{
+			if(out!=null){
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public static StatusSpace readObjectOfThis(String addr){
+
+		ObjectInputStream in = null;
+		StatusSpace ObjectOfThis = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(addr));
+			
+			ObjectOfThis =  (StatusSpace)in.readObject();
+			return ObjectOfThis;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch(ClassNotFoundException cnfe){
+			cnfe.printStackTrace();
+			return null;
+		} catch(ClassCastException cce){
+			cce.printStackTrace();
+			return null;
+		}finally{
+			if(in!=null){
+				try {
+					in.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	
+	public void deadLoop(){
+		int i = 0;
+		for(;;){
+			i = i+1;
+			i = i-1;
+		}
+	}
 }
